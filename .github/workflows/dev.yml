@@ -12,16 +12,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18' 
-
-      - name: Install dependencies
-        run: yarn install
-  
-      - name: Build application
-        run: yarn build
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -37,14 +27,12 @@ jobs:
       - name: Set TAG
         run: echo "TAG=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
 
-      - name: Pack and push Backend Docker image
+      - name: Build and push blog image
         id: docker-build-backend
         uses: docker/build-push-action@v2
         with:
-          context: ./
+          context: .
           file: .deploy/Dockerfile.blog.prod
           push: true
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/allright-blog-dev:${{ env.TAG }}
-          build-args: |
-            SERVER_CONF=new-dev

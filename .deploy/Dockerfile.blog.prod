@@ -1,5 +1,22 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
+ARG NODE_ENV=production
 WORKDIR /app
 COPY ./package.* ./yarn.* ./
-COPY dist .
+RUN yarn install
+COPY . .
+RUN yarn build
+
+FROM node:18-alpine
+ARG NODE_ENV=production
+WORKDIR /app
+
+COPY --from=builder /app/package.* /app/yarn.* ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY public ./public
+
+
+ENV PORT=8080
+
 CMD ["yarn", "start"]
+

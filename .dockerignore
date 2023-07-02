@@ -1,6 +1,7 @@
 **
 !./src
 !./public
+!./dist
 !./config
 !./database
 !./tsconfig.json
@@ -8,7 +9,7 @@
 !./yarn.*
 !./favicon.png
 
-# .deploy
+.deploy
 Dockerfile
 docker-compose.yml
 .env.example
