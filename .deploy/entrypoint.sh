@@ -5,4 +5,6 @@ source .env
 ls -la
 cat /env/.env
 
-ENV_PATH="/env/.env" yarn start
+export ENV_PATH="/env/.env"
+
+exec "$@"

@@ -23,5 +23,5 @@ ENV ENV_PATH=/env/.env
 COPY .deploy/entrypoint.sh .
 ENTRYPOINT [ "/app/entrypoint.sh" ]
 
-
+CMD [ "yarn", "start" ]
 
