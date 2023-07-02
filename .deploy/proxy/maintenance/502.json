@@ -1,0 +1,9 @@
+{
+  "data": null,
+  "error": {
+    "status": "502",
+    "name": "ApplicationError",
+    "message": "Bad Gateway",
+    "details": {}
+  }
+}

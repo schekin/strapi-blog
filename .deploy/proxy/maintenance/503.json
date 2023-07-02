@@ -1,0 +1,9 @@
+{
+  "data": null,
+  "error": {
+    "status": "503",
+    "name": "ApplicationError",
+    "message": "Service Unavailable",
+    "details": {}
+  }
+}

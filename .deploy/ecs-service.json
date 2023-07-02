@@ -1,0 +1,33 @@
+{
+    "serviceName": "Strapi",
+    "cluster": "TEST",
+    "loadBalancers": [
+        {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:eu-central-1:725662245886:targetgroup/TEST-Strapi-int/63d9a314ae498f0f",
+            "containerName": "proxy",
+            "containerPort": 8080
+        }
+
+    ],
+    "desiredCount": 1,
+    "capacityProviderStrategy": [
+        {
+            "capacityProvider": "EC2-SPOT",
+            "weight": 1,
+            "base": 0
+        }
+    ],
+    "taskDefinition": "arn:aws:ecs:eu-central-1:725662245886:task-definition/test-strapi:6",
+    "deploymentConfiguration": {
+        "deploymentCircuitBreaker": {
+            "enable": false,
+            "rollback": false
+        },
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 0
+    },
+    "healthCheckGracePeriodSeconds": 0,
+    "schedulingStrategy": "REPLICA",
+    "enableECSManagedTags": true,
+    "propagateTags": "SERVICE"
+}

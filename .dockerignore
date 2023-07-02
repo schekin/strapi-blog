@@ -1,0 +1,16 @@
+**
+!./src
+!./public
+!./config
+!./database
+!./tsconfig.json
+!./package.*
+!./yarn.*
+!./favicon.png
+
+# .deploy
+Dockerfile
+docker-compose.yml
+.env.example
+.editorconfig
+README.md

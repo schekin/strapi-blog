@@ -1,0 +1,70 @@
+version: '3.7'
+networks:
+  allright_default:
+    external: true
+
+services:
+  strapi:
+    container_name: strapi
+    build: .
+    environment:
+      DATABASE_HOST: strapi-db
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: 111
+      AWS_SDK_LOAD_CONFIG: 1
+      STATIC_URL: http://localhost:3002
+      APP_KEYS: "toBeModified1,toBeModified2"
+      API_TOKEN_SALT: tobemodified
+      ADMIN_JWT_SECRET: tobemodified
+      JWT_SECRET: tobemodified
+      AWS_BUCKET: test-blog-content/blog
+      AWS_IMG_URL: https://s-test.allright.com/blog
+    depends_on:
+      - strapi-db
+    links:
+      - strapi-db
+    volumes:
+      - ${HOME}/.aws:/opt/app/.aws
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./database:/opt/app/database
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - '1337:8080'
+    networks:
+      - allright_default
+    command: >
+      bash -c "yarn build
+      && yarn develop"
+
+  strapi-db:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    container_name: strapi-db
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_PASSWORD: 111
+      POSTGRES_USER: strapi
+    ports:
+      - "35432:5432"
+    volumes:
+      - strapi-db:/var/lib/postgresql/data:rw
+    networks:
+      - allright_default
+
+  strapi-db-web:
+    image: dpage/pgadmin4
+    container_name: strapi-db-web
+    environment:
+      PGADMIN_DEFAULT_EMAIL: db@local.loc
+      PGADMIN_DEFAULT_PASSWORD: 111
+    ports:
+      - "28880:80"
+    volumes:
+      - ./.deploy/servers.json:/pgadmin4/servers.json:ro
+    depends_on:
+      - strapi-db
+    networks:
+      - allright_default
+volumes:
+  strapi-db:

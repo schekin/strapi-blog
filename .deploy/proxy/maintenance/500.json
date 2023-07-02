@@ -1,0 +1,9 @@
+{
+  "data": null,
+  "error": {
+    "status": "500",
+    "name": "ApplicationError",
+    "message": "Internal server error",
+    "details": {}
+  }
+}

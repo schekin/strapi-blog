@@ -1,0 +1,9 @@
+{
+  "data": null,
+  "error": {
+    "status": "504",
+    "name": "ApplicationError",
+    "message": "Gateway Timeout",
+    "details": {}
+  }
+}

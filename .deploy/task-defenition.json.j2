@@ -1,0 +1,82 @@
+{
+    "containerDefinitions": [
+        {
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "protocol": "tcp"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "fluentd",
+                "options": {
+                    "fluentd-address": "127.0.0.1:24224",
+                    "tag": "{{ env }}-strapi-proxy",
+                    "fluentd-async": "true"
+                }
+            },
+            "links": [
+                "app"
+            ],
+            "name": "proxy",
+            "image": "725662245886.dkr.ecr.eu-central-1.amazonaws.com/strapi:strapi-{{ env }}-proxy-{{ GIT_COMMIT }}",
+            "cpu": {{ proxy_cpu }},
+            "memory": {{ proxy_memory }},
+            "memoryReservation": {{ proxy_memory }},
+            "ulimits": [
+                {
+                    "softLimit": 4096,
+                    "hardLimit": 4096,
+                    "name": "nofile"
+                }
+            ],
+            "essential": true
+        },
+        {
+            "essential": true,
+            "name": "app",
+            "environment": [
+                { "name": "NODE_ENV",             "value": "{{ node_env }}"             },
+                { "name": "DATABASE_HOST",        "value": "{{ DB_HOST }}"              },
+                { "name": "DATABASE_NAME",        "value": "{{ DB_NAME }}"              },
+                { "name": "DATABASE_USERNAME",    "value": "{{ DB_USER }}"              },
+                { "name": "DATABASE_PASSWORD",    "value": "{{ DB_PASS }}"              },
+                { "name": "STATIC_URL",           "value": "{{ STATIC_URL }}"           },
+                { "name": "APP_KEYS",             "value": "toBeModified1,toBeModified2"},
+                { "name": "API_TOKEN_SALT",       "value": "tobemodified"               },
+                { "name": "ADMIN_JWT_SECRET",     "value": "tobemodified"               },
+                { "name": "JWT_SECRET",           "value": "tobemodified"               },
+                { "name": "AWS_BUCKET",           "value": "{{ BUCKET }}"               },
+                { "name": "MAILER_SMTP_HOST",     "value": "{{ MAILER_SMTP_HOST }}"     },
+                { "name": "MAILER_SMTP_PORT",     "value": "{{ MAILER_SMTP_PORT }}"     },
+                { "name": "MAILER_AUTH_USER",     "value": "{{ MAILER_AUTH_USER }}"     },
+                { "name": "MAILER_AUTH_PASS",     "value": "{{ MAILER_AUTH_PASS }}"     },
+                { "name": "MAILER_SENDER",        "value": "{{ MAILER_SENDER }}"        },
+                { "name": "MAILER_REPLIER",       "value": "{{ MAILER_REPLIER }}"       },
+                { "name": "AWS_SITEMAP_BUCKET",   "value": "{{ aws_sitemap_bucket }}"   },
+                { "name": "AWS_IMG_URL",          "value": "{{ AWS_IMG_URL }}"          }
+            ],
+            "image": "725662245886.dkr.ecr.eu-central-1.amazonaws.com/strapi:strapi-{{ env }}-app-{{ GIT_COMMIT }}",
+            "logConfiguration": {
+                "logDriver": "fluentd",
+                "options": {
+                    "fluentd-address": "127.0.0.1:24224",
+                    "tag": "{{ env }}-strapi-app",
+                    "fluentd-async": "true"
+                }
+            },
+            "cpu": {{ cpu }},
+            "memory": {{ memory }},
+            "ulimits": [
+                {
+                    "softLimit": 4096,
+                    "hardLimit": 4096,
+                    "name": "nofile"
+                }
+            ],
+            "memoryReservation": {{ memory }}
+        }
+    ],
+    "executionRoleArn": "{{ role }}",
+    "family": "{{ env }}-strapi"
+}
