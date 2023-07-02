@@ -18,5 +18,5 @@ COPY public ./public
 
 ENV PORT=8080
 
-CMD ["yarn", "start"]
+CMD ["ENV_PATH=/env/.env", "yarn", "start"]
 
