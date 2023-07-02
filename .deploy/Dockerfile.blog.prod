@@ -12,9 +12,9 @@ ARG NODE_ENV=production
 ARG ENV_PATH=/env/.env
 WORKDIR /app
 
-# COPY --from=builder /app/package.* /app/yarn.* ./
-# COPY --from=builder /app/node_modules ./node_modules
-# COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.* /app/yarn.* ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
 COPU . .
 COPY tsconfig.json ./
 COPY public ./public
