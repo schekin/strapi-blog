@@ -16,7 +16,8 @@ COPY --from=builder /app/dist ./dist
 COPY public ./public
 
 
-ENV PORT=8080
+ENV PORT=3000
+ENV ENV_PATH=/env/.env
 
-CMD ["ENV_PATH=/env/.env", "yarn", "start"]
+CMD ["yarn", "start"]
 
