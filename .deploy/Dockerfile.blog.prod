@@ -20,8 +20,8 @@ COPY public ./public
 
 ENV PORT=3000
 ENV ENV_PATH=/env/.env
-
-CMD [ "yarn", "start", "echo ${ENV_PATH}" ]
+COPY .deploy/entrypoint.sh ./entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
 
 
 
