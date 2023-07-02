@@ -19,5 +19,5 @@ COPY public ./public
 ENV PORT=3000
 ENV ENV_PATH=/env/.env
 
-CMD [ "yarn", "start", "$ENV_PATH" ]
+CMD [ "yarn", "start", "--path", "$ENV_PATH" ]
 
