@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/ash
 set -e
 
-source .env
-ls -la
-cat /env/.env
+export_env_variables() {
+    cat /env/.env | awk -F'=' '/^[^data:|^metadata:]/ { print $0 }' | while IFS= read -r line; do
+        export "$line"
+    done
+}
 
-export ENV_PATH="/env/.env"
+export_env_variables
 
 exec "$@"
