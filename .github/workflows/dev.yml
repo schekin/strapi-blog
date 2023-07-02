@@ -28,7 +28,7 @@ jobs:
         run: echo "TAG=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Build and push blog image
-        id: docker-build-backend
+        id: docker-build-blog
         uses: docker/build-push-action@v2
         with:
           context: .
