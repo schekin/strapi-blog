@@ -20,7 +20,7 @@ COPY public ./public
 
 ENV PORT=3000
 ENV ENV_PATH=/env/.env
-COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
+COPY .deploy/entrypoint.sh .
 ENTRYPOINT [ "entrypoint.sh" ]
 
 
