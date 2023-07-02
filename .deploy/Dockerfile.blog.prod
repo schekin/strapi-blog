@@ -15,8 +15,7 @@ WORKDIR /app
 COPY --from=builder /app/package.* /app/yarn.* ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPU . .
-COPY tsconfig.json ./
+COPY . .
 COPY public ./public
 
 
