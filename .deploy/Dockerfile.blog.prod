@@ -1,5 +1,6 @@
 FROM node:18-alpine as builder
 ARG NODE_ENV=production
+ARG ENV_PATH=/env/.env
 WORKDIR /app
 COPY ./package.* ./yarn.* ./
 RUN yarn install
@@ -7,8 +8,8 @@ COPY . .
 RUN yarn build
 
 FROM node:18-alpine
-RUN apk add bash
 ARG NODE_ENV=production
+ARG ENV_PATH=/env/.env
 WORKDIR /app
 
 COPY --from=builder /app/package.* /app/yarn.* ./
@@ -20,9 +21,7 @@ COPY public ./public
 ENV PORT=3000
 ENV ENV_PATH=/env/.env
 
-SHELL ["/bin/bash", "-c"]
-
-CMD ENV_PATH=/env/.env yarn start
+CMD [ "yarn", "start", "echo ${ENV_PATH}" ]
 
 
 
